@@ -1,0 +1,14 @@
+{
+  "connections": [
+    {
+      "name": "example-api",
+      "base_url": "https://api.example.com/v1",
+      "auth_type": "bearer",
+      "auth_env_var": "EXAMPLE_API_TOKEN",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    }
+  ]
+}

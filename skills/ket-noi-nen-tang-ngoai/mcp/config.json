@@ -1,0 +1,15 @@
+{
+  "_comment": "Danh sách MCP servers cần thêm vào .claude/settings.json",
+  "servers": [
+    {
+      "name": "example-mcp",
+      "description": "MCP server mẫu",
+      "command": "npx",
+      "args": ["-y", "@example/mcp-server"],
+      "env": {
+        "API_KEY": "{{API_KEY_ENV_VAR}}"
+      },
+      "status": "template"
+    }
+  ]
+}

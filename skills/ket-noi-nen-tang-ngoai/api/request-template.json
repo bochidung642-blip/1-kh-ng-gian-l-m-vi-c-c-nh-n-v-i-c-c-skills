@@ -1,0 +1,16 @@
+{
+  "_comment": "Template cho REST API request. Sao chép và điền thông tin thực tế.",
+  "method": "POST",
+  "endpoint": "/endpoint-path",
+  "headers": {
+    "Authorization": "Bearer {{API_TOKEN}}",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "key": "value"
+  },
+  "expected_response": {
+    "status": 200,
+    "schema": {}
+  }
+}

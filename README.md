@@ -247,6 +247,103 @@ Tất cả file kết quả nằm trong [`skills/quan-ly-files/outputs/`](skills
 
 ---
 
+# Phần VI — Tiết kiệm Token & Lợi ích thực tế
+
+## Token là gì — và tại sao cần tiết kiệm?
+
+> **Token** = "nhiên liệu" để Claude hoạt động. Mỗi từ bạn gõ vào và mỗi từ Claude trả lời đều tốn token. Gói sử dụng có giới hạn token mỗi tháng — dùng hết thì hết quota.
+
+```
+Không có skills:                     Có skills:
+────────────────────                 ────────────────────
+Mỗi cuộc hội thoại bạn phải         Skills đã lưu sẵn hướng dẫn
+giải thích lại từ đầu:               Claude đọc 1 lần, hiểu ngay
+  "Báo cáo theo format này,          Không cần giải thích lại
+   lưu ở đây, viết giọng thế này"    Không tốn token hướng dẫn
+  = Tốn 400-800 token mỗi lần       = Gần như 0 token hướng dẫn
+```
+
+---
+
+## 3 cơ chế tiết kiệm token
+
+```mermaid
+flowchart TD
+    T["Token được tiết kiệm nhờ 2 skills"]
+
+    T --> A["Cơ chế 1\nHướng dẫn viết 1 lần\ndùng mãi mãi"]
+    T --> B["Cơ chế 2\nTemplate có sẵn\nkhông sinh từ đầu"]
+    T --> C["Cơ chế 3\nĐúng ngay lần đầu\nkhông mất vòng sửa"]
+
+    A --> A1["Thay vì giải thích 400-800 token\nmỗi lần nói chuyện\n→ Skill file đọc 1 lần\n~50 token cho lệnh gọi"]
+    B --> B1["Thay vì Claude tự nghĩ\nra cấu trúc báo cáo\n→ Điền vào template sẵn\n= ít token sinh output hơn"]
+    C --> C1["Không có skills:\nSai → sửa → sai → sửa\n= gấp 2-3 lần token\nCó skills: đúng ngay lần đầu"]
+
+    style T fill:#4A90D9,color:#fff
+    style A fill:#8E44AD,color:#fff
+    style B fill:#E67E22,color:#fff
+    style C fill:#27AE60,color:#fff
+```
+
+---
+
+## Ước tính tiết kiệm token — ví dụ tạo báo cáo tuần
+
+| Bước | Không có skills | Có skills | Tiết kiệm |
+|------|----------------|-----------|----------|
+| Giải thích format báo cáo | ~600 token | ~0 token | ~600 token |
+| Giải thích cách lưu file | ~200 token | ~0 token | ~200 token |
+| Claude sinh báo cáo sai format, phải làm lại | ~1.000 token | — | ~1.000 token |
+| Bạn sửa + Claude sinh lại lần 2 | ~1.200 token | — | ~1.200 token |
+| Claude sinh đúng ngay lần đầu | — | ~800 token | — |
+| **Tổng 1 lần báo cáo** | **~3.000 token** | **~800 token** | **~73%** |
+
+> **4 báo cáo tuần trong 1 tháng:**  
+> Không có skills: ~12.000 token | Có skills: ~3.200 token  
+> **Tiết kiệm ~8.800 token/tháng — chỉ riêng việc báo cáo**
+
+---
+
+## Lợi ích ngoài token
+
+```mermaid
+flowchart LR
+    SK["2 Skills cốt lõi"]
+
+    SK --> L1["Nhất quán\nCùng 1 format mọi lần\nkhông lệch chuẩn"]
+    SK --> L2["Tích luỹ\nOutputs lưu lại theo thời gian\ntìm lại dễ dàng"]
+    SK --> L3["Mở rộng\nThêm skill mới chồng lên\nkhông xây lại từ đầu"]
+    SK --> L4["Chia sẻ\nTeam clone repo là dùng được\nkhông cần giải thích lại"]
+
+    style SK fill:#4A90D9,color:#fff
+    style L1 fill:#8E44AD,color:#fff
+    style L2 fill:#E67E22,color:#fff
+    style L3 fill:#27AE60,color:#fff
+    style L4 fill:#E74C3C,color:#fff
+```
+
+**Nhất quán** — Báo cáo tuần 1 và tuần 52 có cùng cấu trúc, cách đặt tên, nơi lưu. Không phụ thuộc vào việc hôm nay bạn có nhớ format hay không.
+
+**Tích luỹ** — Mỗi lần chạy skill để lại 1 file trong `outputs/`. Sau 6 tháng có kho lịch sử đầy đủ để so sánh xu hướng, không cần đi tìm lại từng file rải rác.
+
+**Mở rộng** — Skills xây theo lớp. Skill 3 dùng Skill 1 và 2 làm nền. Skill 4, 5 tiếp theo cũng vậy — không cần xây lại từ đầu.
+
+**Chia sẻ** — Toàn bộ workspace trên GitHub. Đồng nghiệp clone về là có môi trường giống hệt, không cần giải thích lại quy trình.
+
+---
+
+## Tổng hợp lợi ích
+
+| Lợi ích | Đo bằng gì | Kết quả |
+|---------|-----------|--------|
+| Tiết kiệm token | Token/tháng | ~60–75% với tác vụ lặp lại |
+| Tiết kiệm thời gian | Giờ/tuần | ~2 giờ/tuần (báo cáo + tài liệu) |
+| Độ chính xác | Số vòng sửa | Giảm từ 2–3 vòng xuống gần 0 |
+| Tính nhất quán | Format đầu ra | 100% đồng nhất mọi lần |
+| Khả năng tìm lại | Thời gian tìm file | Từ vài phút xuống vài giây |
+
+---
+
 # Phần VI — Bắt đầu dùng ngay
 
 > Bạn cần làm đúng 2 thứ: **gõ tên skill** + **nói việc muốn làm**. Không cần biết gì thêm.

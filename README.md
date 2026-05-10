@@ -8,27 +8,24 @@
 
 ```mermaid
 mindmap
-  root((Workspace<br/>của bạn))
-    Skill 1
-      Người kết nối
-        Gọi API
-          Lấy hoặc gửi dữ liệu
-          từ dịch vụ bên ngoài
-        MCP Server
-          Cắm thêm công cụ
-          Google Drive · Notion · Slack
-        CLI Tools
-          Chạy lệnh máy tính
-          GitHub · AWS · Docker
-    Skill 2
-      Người quản lý hồ sơ
-        Templates
-          Mẫu tài liệu
-          Mẫu báo cáo
-          Mẫu đặc tả API
-        Outputs
-          Lưu kết quả đúng chỗ
-          Đặt tên theo ngày
+  root((Workspace của bạn))
+    Skill 1 - Người kết nối
+      Gọi API
+        Lấy hoặc gửi dữ liệu từ dịch vụ ngoài
+      MCP Server
+        Cắm thêm công cụ
+        Google Drive - Notion - Slack
+      CLI Tools
+        Chạy lệnh máy tính
+        GitHub - AWS - Docker
+    Skill 2 - Người quản lý hồ sơ
+      Templates
+        Mẫu tài liệu
+        Mẫu báo cáo
+        Mẫu đặc tả API
+      Outputs
+        Lưu kết quả đúng chỗ
+        Đặt tên theo ngày
 ```
 
 ---
@@ -60,21 +57,23 @@ mindmap
 flowchart TD
     A([Bạn gõ lệnh skill]) --> B{Muốn làm gì?}
 
-    B -->|Lấy dữ liệu\nngoài| C[Skill 1\nket-noi-nen-tang-ngoai]
-    B -->|Tạo file\ntừ mẫu| D[Skill 2\nquan-ly-files]
+    B -->|Lấy dữ liệu ngoài| C[Skill 1 - ket-noi-nen-tang-ngoai]
+    B -->|Tạo file từ mẫu| D[Skill 2 - quan-ly-files]
 
     C --> C1{Loại kết nối}
-    C1 -->|API| C2[Gọi HTTP request\nđến dịch vụ ngoài]
-    C1 -->|MCP| C3[Dùng công cụ\nđã cắm sẵn]
-    C1 -->|CLI| C4[Chạy lệnh\nmáy tính]
+    C1 -->|API| C2[Gọi HTTP request đến dịch vụ ngoài]
+    C1 -->|MCP| C3[Dùng công cụ đã cắm sẵn]
+    C1 -->|CLI| C4[Chạy lệnh máy tính]
 
-    D --> D1[Chọn template\nphù hợp]
-    D1 --> D2[Điền thông tin\nvào mẫu]
+    D --> D1[Chọn template phù hợp]
+    D1 --> D2[Điền thông tin vào mẫu]
 
-    C2 & C3 & C4 --> E[(Lưu kết quả\nvào outputs/)]
+    C2 --> E[(Lưu vào outputs/)]
+    C3 --> E
+    C4 --> E
     D2 --> E
 
-    E --> F([Báo cáo cho bạn\nbằng ngôn ngữ tự nhiên])
+    E --> F([Báo cáo cho bạn bằng ngôn ngữ tự nhiên])
 
     style A fill:#4A90D9,color:#fff
     style F fill:#27AE60,color:#fff
@@ -88,11 +87,11 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     actor Bạn
-    participant S1 as Skill 1<br/>(Người kết nối)
-    participant S2 as Skill 2<br/>(Người quản lý)
+    participant S1 as Skill 1 - Người kết nối
+    participant S2 as Skill 2 - Người quản lý
     participant Out as outputs/
 
-    Bạn->>S1: /ket-noi-nen-tang-ngoai<br/>"Gọi API thời tiết Hà Nội"
+    Bạn->>S1: Gọi API thời tiết Hà Nội
     S1->>S1: Đọc config API
     S1->>S1: Gọi request đến dịch vụ
     S1->>S2: Trả kết quả thô

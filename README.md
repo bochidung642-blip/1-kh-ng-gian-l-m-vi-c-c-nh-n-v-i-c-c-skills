@@ -244,3 +244,143 @@ Tất cả file kết quả nằm trong [`skills/quan-ly-files/outputs/`](skills
 
 > **Tóm lại:** Skill 1 đi ra ngoài lấy dữ liệu — Skill 2 cung cấp khuôn mẫu và lưu kết quả — Skills ứng dụng dùng cả hai để hoàn thành công việc cụ thể.  
 > Bạn chỉ cần nói lệnh, không cần tự làm bước nào.
+
+---
+
+# Phần VI — Bắt đầu dùng ngay
+
+> Bạn cần làm đúng 2 thứ: **gõ tên skill** + **nói việc muốn làm**. Không cần biết gì thêm.
+
+## Cú pháp cơ bản
+
+```
+/[tên-skill]  [mô tả việc bạn muốn làm]
+```
+
+---
+
+## Ví dụ dùng Skill 1 — Người kết nối
+
+### Trường hợp 1: Gọi API lấy dữ liệu
+
+```
+/ket-noi-nen-tang-ngoai  Gọi Facebook Ads API lấy số liệu leads và chi phí tuần này
+```
+
+Skill sẽ hỏi lại bạn (nếu chưa cấu hình):
+```
+→ "Bạn đã có API token của Facebook chưa? Nếu có hãy cung cấp hoặc
+   cho tôi biết tên biến môi trường đang lưu token đó."
+```
+
+Sau khi có token:
+```
+→ Skill tự gọi API
+→ Trả về: 85 leads | CPL: 125.000đ | Chi phí: 10.625.000đ
+→ Hỏi: "Bạn muốn lưu kết quả này vào outputs/ không?"
+```
+
+---
+
+### Trường hợp 2: Chạy lệnh CLI thay bạn
+
+```
+/ket-noi-nen-tang-ngoai  Tạo repo GitHub mới tên "chien-dich-thang-6" ở chế độ private
+```
+
+```
+→ Skill chạy: gh repo create chien-dich-thang-6 --private
+→ Báo lại: "Đã tạo xong tại github.com/[tên-bạn]/chien-dich-thang-6"
+```
+
+---
+
+### Trường hợp 3: Kết nối MCP để đọc Google Drive
+
+```
+/ket-noi-nen-tang-ngoai  Đọc file "Kế hoạch tháng 6" trong Google Drive của tôi
+```
+
+```
+→ Skill kiểm tra MCP Google Drive đã kết nối chưa
+→ Nếu chưa: hướng dẫn bạn cắm MCP vào settings (1 lần duy nhất)
+→ Nếu rồi: tự đọc file và trả nội dung về
+```
+
+---
+
+## Ví dụ dùng Skill 2 — Người quản lý hồ sơ
+
+### Trường hợp 1: Tạo tài liệu từ template có sẵn
+
+```
+/quan-ly-files  Tạo báo cáo tháng 5 cho lãnh đạo
+```
+
+```
+→ Skill lấy template: bao-cao-thang-lanh-dao.md
+→ Hỏi: "Bạn có số liệu tháng 5 chưa? Cung cấp để tôi điền vào."
+→ Sau khi bạn cung cấp số: điền vào template, lưu file
+→ Lưu thành: outputs/2026-05-31_bao-cao-thang-5_lanh-dao.md
+```
+
+---
+
+### Trường hợp 2: Tìm lại file cũ
+
+```
+/quan-ly-files  Tìm báo cáo tuần W19 tháng 5
+```
+
+```
+→ Skill tìm trong outputs/
+→ Tìm thấy: 2026-05-11_bao-cao-tuan-W19_lanh-dao.md
+            2026-05-11_bao-cao-tuan-W19_thuc-thi.md
+→ Hỏi: "Bạn muốn đọc phiên bản nào?"
+```
+
+---
+
+### Trường hợp 3: Thêm template mới vào tủ
+
+```
+/quan-ly-files  Tạo template mới cho brief sản xuất video
+```
+
+```
+→ Skill hỏi: "Brief video cần có những mục nào?"
+→ Bạn mô tả: mục tiêu, kênh đăng, độ dài, tone, deadline...
+→ Skill tạo file: templates/brief-san-xuat-video.md
+→ Lần sau gõ: /quan-ly-files tạo brief video → có ngay
+```
+
+---
+
+## Dùng cả 2 skill cùng lúc
+
+Đây là lúc workspace hoạt động mạnh nhất — bạn không cần gọi từng skill riêng lẻ, chỉ cần mô tả việc muốn làm:
+
+```
+Tạo báo cáo tuần W20 cho cả lãnh đạo và team.
+Số liệu: Facebook 92 leads 11tr, Google 18 leads 5tr,
+Email open rate 28%, SEO 15 leads.
+```
+
+```
+→ Skill 1 nhận diện: có số liệu thô cần xử lý
+→ Skill 2 nhận diện: cần 2 template báo cáo + lưu 2 file output
+→ Hai skill phối hợp tự động, bạn nhận về 2 file hoàn chỉnh
+```
+
+---
+
+## Bảng tóm tắt — Gõ gì để làm gì
+
+| Bạn muốn làm | Gõ lệnh |
+|-------------|---------|
+| Lấy số liệu từ Facebook/Google/Email | `/ket-noi-nen-tang-ngoai` + mô tả nguồn dữ liệu |
+| Chạy lệnh GitHub, cloud, server | `/ket-noi-nen-tang-ngoai` + mô tả hành động |
+| Tạo tài liệu từ mẫu có sẵn | `/quan-ly-files` + tên loại tài liệu |
+| Tìm lại file đã lưu | `/quan-ly-files` + mô tả file cần tìm |
+| Thêm mẫu mới vào tủ | `/quan-ly-files` + tạo template [tên] |
+| Tạo báo cáo hoàn chỉnh | Mô tả thẳng việc cần làm + cung cấp số liệu |
